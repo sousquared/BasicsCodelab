@@ -50,19 +50,26 @@ private fun DefaultGreeting(name: String) {
 
 @Composable
 private fun Greeting(name: String) {
+    val expanded = remember { mutableStateOf(false) }
+
+    val extraPadding = if (expanded.value) 48.dp else 0.dp
+
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
         Row(modifier = Modifier.padding(24.dp)) {
-            Column(modifier = Modifier.weight(weight = 1f)) {
+            Column(modifier = Modifier
+                .weight(weight = 1f)
+                .padding(bottom = extraPadding)
+            ) {
                 Text(text = "Hello,")
                 Text(text = name)
             }
             OutlinedButton(
-                onClick = { /*TODO*/ }
+                onClick = { expanded.value = !expanded.value }
             ) {
-                Text(text = "Show more")
+                Text(text = if (expanded.value) "Show less" else "Show more")
             }
         }
     }
